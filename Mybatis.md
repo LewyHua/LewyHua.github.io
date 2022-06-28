@@ -199,6 +199,7 @@ public class UserMapperTest {
 # 核心配置文件详解
 >核心配置文件中的标签必须按照固定的顺序(有的标签可以不写，但顺序一定不能乱)：
 properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapperFactory、reflectorFactory、plugins、environments、databaseIdProvider、mappers
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
