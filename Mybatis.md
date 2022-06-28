@@ -8,30 +8,9 @@
 2. MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集
 3. MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
 4. MyBatis 是一个 半自动的ORM（Object Relation Mapping）框架
-## MyBatis下载
-- [MyBatis下载地址](https://github.com/mybatis/mybatis-3)
-- ![](Resources/MyBatis下载.png)
-## 和其它持久化层技术对比
-- JDBC
-    - SQL 夹杂在Java代码中耦合度高，导致硬编码内伤
-    - 维护不易且实际开发需求中 SQL 有变化，频繁修改的情况多见
-    - 代码冗长，开发效率低
-- Hibernate 和 JPA
-    - 操作简便，开发效率高
-    - 程序中的长难复杂 SQL 需要绕过框架
-    - 内部自动生产的 SQL，不容易做特殊优化
-    - 基于全映射的全自动框架，大量字段的 POJO 进行部分映射时比较困难。
-    - 反射操作太多，导致数据库性能下降
-- MyBatis
-    - 轻量级，性能出色
-    - SQL 和 Java 编码分开，功能边界清晰。Java代码专注业务、SQL语句专注数据
-    - 开发效率稍逊于HIbernate，但是完全能够接受
+
 # 搭建MyBatis
-## 开发环境
-- IDE：idea 2019.2
-- 构建工具：maven 3.5.4
-- MySQL版本：MySQL 5.7
-- MyBatis版本：MyBatis 3.5.7
+
 ## 创建maven工程
 - 打包方式：jar
 - 引入依赖
