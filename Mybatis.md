@@ -42,6 +42,7 @@
 >习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
 >核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 >核心配置文件存放的位置是src/main/resources目录下
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE configuration  
@@ -99,6 +100,7 @@ public interface UserMapper {
 - MyBatis中可以面向接口操作数据，要保证两个一致
     - mapper接口的全类名和映射文件的命名空间（namespace）保持一致
     - mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致
+  
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper  
@@ -115,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 - SqlSession：代表Java程序和数据库之间的会话。（HttpSession是Java程序和浏览器之间的会话）
 - SqlSessionFactory：是“生产”SqlSession的“工厂”
 - 工厂模式：如果创建某一个对象，使用的过程基本固定，那么我们就可以把创建这个对象的相关代码封装到一个“工厂类”中，以后都使用这个工厂类来“生产”我们需要的对象
+
 ```java
 public class UserMapperTest {
     @Test
