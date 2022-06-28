@@ -36,7 +36,7 @@
 - 打包方式：jar
 - 引入依赖
 
-  ```xml
+  ```
   <dependencies>
       <!-- Mybatis核心 -->
       <dependency>
@@ -63,7 +63,7 @@
 >习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
 >核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 >核心配置文件存放的位置是src/main/resources目录下
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE configuration  
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 ```
 ## 创建mapper接口
 >MyBatis中的mapper接口相当于以前的dao。但是区别在于，mapper仅仅是接口，我们不需要提供实现类
-```java
+```
 package com.atguigu.mybatis.mapper;  
   
 public interface UserMapper {  
@@ -120,7 +120,7 @@ public interface UserMapper {
 - MyBatis中可以面向接口操作数据，要保证两个一致
     - mapper接口的全类名和映射文件的命名空间（namespace）保持一致
     - mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper  
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
@@ -136,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 - SqlSession：代表Java程序和数据库之间的会话。（HttpSession是Java程序和浏览器之间的会话）
 - SqlSessionFactory：是“生产”SqlSession的“工厂”
 - 工厂模式：如果创建某一个对象，使用的过程基本固定，那么我们就可以把创建这个对象的相关代码封装到一个“工厂类”中，以后都使用这个工厂类来“生产”我们需要的对象
-```java
+```
 public class UserMapperTest {
     @Test
     public void testInsertUser() throws IOException {
@@ -163,7 +163,7 @@ public class UserMapperTest {
 - 此时需要手动提交事务，如果要自动提交事务，则在获取sqlSession对象时，使用`SqlSession sqlSession = sqlSessionFactory.openSession(true);`，传入一个Boolean类型的参数，值为true，这样就可以自动提交
 ## 加入log4j日志功能
 1. 加入依赖
-   ```xml
+   ```
    <!-- log4j日志 -->
    <dependency>
    <groupId>log4j</groupId>
@@ -174,7 +174,7 @@ public class UserMapperTest {
 2. 加入log4j的配置文件
     - log4j的配置文件名为log4j.xml，存放的位置是src/main/resources目录下
     - 日志的级别：FATAL(致命)>ERROR(错误)>WARN(警告)>INFO(信息)>DEBUG(调试) 从左到右打印的内容越来越详细
-   ```xml
+   ```
    <?xml version="1.0" encoding="UTF-8" ?>
    <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
    <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
@@ -200,7 +200,7 @@ public class UserMapperTest {
 >核心配置文件中的标签必须按照固定的顺序(有的标签可以不写，但顺序一定不能乱)：
 properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapperFactory、reflectorFactory、plugins、environments、databaseIdProvider、mappers
 
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
         PUBLIC "-//MyBatis.org//DTD Config 3.0//EN"
@@ -287,35 +287,35 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 
 # MyBatis的增删改查
 1. 添加
-   ```xml
+   ```
    <!--int insertUser();-->
    <insert id="insertUser">
        insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
    </insert>
    ```
 2. 删除
-   ```xml
+   ```
    <!--int deleteUser();-->
    <delete id="deleteUser">
        delete from t_user where id = 6
    </delete>
    ```
 3. 修改
-   ```xml
+   ```
    <!--int updateUser();-->
    <update id="updateUser">
        update t_user set username = '张三' where id = 5
    </update>
    ```
 4. 查询一个实体类对象
-   ```xml
+   ```
    <!--User getUserById();-->  
    <select id="getUserById" resultType="com.atguigu.mybatis.bean.User">  
        select * from t_user where id = 2  
    </select>
    ```
 5. 查询集合
-   ```xml
+   ```
    <!--List<User> getUserList();-->
    <select id="getUserList" resultType="com.atguigu.mybatis.bean.User">
        select * from t_user
@@ -338,13 +338,13 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 
 - #{}一般用在***用户输入值***的地方
 
-  ```java
+  ```
   SELECT * FROM  'user'
   ```
 
 ![${}](Resources/${}.png)
 
-```java
+```
 SELECT * FROM ${tableName} //如果传入基本类型如字符串时就要把tableName改为value才能够成功取值。
 SELECT * FROM user   // OK
 SELECT * FROM "user" //FAIL
@@ -357,13 +357,13 @@ SELECT * FROM "user" //FAIL
 ## 单个字面量类型的参数
 
 - 若mapper接口中的方法参数为单个的字面量类型，此时可以使用\${}和#{}以任意的名称（最好见名识意）获取参数的值，注意${}需要手动加单引号
-```xml
+```
 <!--User getUserByUsername(String username);-->
 <select id="getUserByUsername" resultType="User">
 	select * from t_user where username = #{username}
 </select>
 ```
-```xml
+```
 <!--User getUserByUsername(String username);-->
 <select id="getUserByUsername" resultType="User">  
 	select * from t_user where username = '${username}'  
@@ -376,13 +376,13 @@ SELECT * FROM "user" //FAIL
     2. 以param1,param2...为键，以参数为值；
 - 因此只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号。
 - 使用arg或者param都行，要注意的是，arg是从arg0开始的，param是从param1开始的
-```xml
+```
 <!--User checkLogin(String username,String password);-->
 <select id="checkLogin" resultType="User">  
 	select * from t_user where username = #{arg0} and password = #{arg1}  
 </select>
 ```
-```xml
+```
 <!--User checkLogin(String username,String password);-->
 <select id="checkLogin" resultType="User">
 	select * from t_user where username = '${param1}' and password = '${param2}'
@@ -390,13 +390,13 @@ SELECT * FROM "user" //FAIL
 ```
 ## map集合类型的参数
 - 若mapper接口中的方法需要的参数为多个时，此时可以手动创建map集合，将这些数据放在map中只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
-```xml
+```
 <!--User checkLoginByMap(Map<String,Object> map);-->
 <select id="checkLoginByMap" resultType="User">
 	select * from t_user where username = #{username} and password = #{password}
 </select>
 ```
-```java
+```
 @Test
 public void checkLoginByMap() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -410,13 +410,13 @@ public void checkLoginByMap() {
 ```
 ## 实体类类型的参数
 - 若mapper接口中的方法参数为实体类对象时此时可以使用\${}和#{}，通过访问实体类对象中的属性名获取属性值，注意${}需要手动加单引号
-```xml
+```
 <!--int insertUser(User user);-->
 <insert id="insertUser">
 	insert into t_user values(null,#{username},#{password},#{age},#{sex},#{email})
 </insert>
 ```
-```java
+```
 @Test
 public void insertUser() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -431,13 +431,13 @@ public void insertUser() {
     1. 以@Param注解的value属性值为键，以参数为值；
     2. 以param1,param2...为键，以参数为值；
 - 只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
-```xml
+```
 <!--User CheckLoginByParam(@Param("username") String username, @Param("password") String password);-->
     <select id="CheckLoginByParam" resultType="User">
         select * from t_user where username = #{username} and password = #{password}
     </select>
 ```
-```java
+```
 @Test
 public void checkLoginByParam() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -460,7 +460,7 @@ public void checkLoginByParam() {
     2. Map类型的List集合接收
     3. 在mapper接口的方法上添加@MapKey注解
 ## 查询一个实体类对象
-```java
+```
 /**
  * 根据用户id查询用户信息
  * @param id
@@ -468,28 +468,28 @@ public void checkLoginByParam() {
  */
 User getUserById(@Param("id") int id);
 ```
-```xml
+```
 <!--User getUserById(@Param("id") int id);-->
 <select id="getUserById" resultType="User">
 	select * from t_user where id = #{id}
 </select>
 ```
 ## 查询一个List集合
-```java
+```
 /**
  * 查询所有用户信息
  * @return
  */
 List<User> getUserList();
 ```
-```xml
+```
 <!--List<User> getUserList();-->
 <select id="getUserList" resultType="User">
 	select * from t_user
 </select>
 ```
 ## 查询单个数据
-```java
+```
 /**  
  * 查询用户的总记录数  
  * @return  
@@ -500,14 +500,14 @@ List<User> getUserList();
  */  
 int getCount();
 ```
-```xml
+```
 <!--int getCount();-->
 <select id="getCount" resultType="_integer">
 	select count(id) from t_user
 </select>
 ```
 ## 查询一条数据为map集合
-```java
+```
 /**  
  * 根据用户id查询用户信息为map集合  
  * @param id  
@@ -515,7 +515,7 @@ int getCount();
  */  
 Map<String, Object> getUserToMap(@Param("id") int id);
 ```
-```xml
+```
 <!--Map<String, Object> getUserToMap(@Param("id") int id);-->
 <select id="getUserToMap" resultType="map">
 	select * from t_user where id = #{id}
@@ -524,7 +524,7 @@ Map<String, Object> getUserToMap(@Param("id") int id);
 ```
 ## 查询多条数据为map集合
 ### 方法一
-```java
+```
 /**  
  * 查询所有用户信息为map集合  
  * @return  
@@ -532,7 +532,7 @@ Map<String, Object> getUserToMap(@Param("id") int id);
  */  
 List<Map<String, Object>> getAllUserToMap();
 ```
-```xml
+```
 <!--Map<String, Object> getAllUserToMap();-->  
 <select id="getAllUserToMap" resultType="map">  
 	select * from t_user  
@@ -545,7 +545,7 @@ List<Map<String, Object>> getAllUserToMap();
 -->
 ```
 ### 方法二
-```java
+```
 /**
  * 查询所有用户信息为map集合
  * @return
@@ -554,7 +554,7 @@ List<Map<String, Object>> getAllUserToMap();
 @MapKey("id")
 Map<String, Object> getAllUserToMap();
 ```
-```xml
+```
 <!--Map<String, Object> getAllUserToMap();-->
 <select id="getAllUserToMap" resultType="map">
 	select * from t_user
@@ -570,7 +570,7 @@ Map<String, Object> getAllUserToMap();
 ```
 # 特殊SQL的执行
 ## 模糊查询
-```java
+```
 /**
  * 根据用户名进行模糊查询
  * @param username 
@@ -579,7 +579,7 @@ Map<String, Object> getAllUserToMap();
  */
 List<User> getUserByLike(@Param("username") String username);
 ```
-```xml
+```
 <!--List<User> getUserByLike(@Param("username") String username);-->
 <select id="getUserByLike" resultType="User">
 	<!--select * from t_user where username like '%${mohu}%'-->  
@@ -590,7 +590,7 @@ List<User> getUserByLike(@Param("username") String username);
 - 其中`select * from t_user where username like "%"#{mohu}"%"`是最常用的
 ## 批量删除
 - 只能使用\${}，如果使用#{}，则解析后的sql语句为`delete from t_user where id in ('1,2,3')`，这样是将`1,2,3`看做是一个整体，只有id为`1,2,3`的数据会被删除。正确的语句应该是`delete from t_user where id in (1,2,3)`，或者`delete from t_user where id in ('1','2','3')`
-```java
+```
 /**
  * 根据id批量删除
  * @param ids 
@@ -599,12 +599,12 @@ List<User> getUserByLike(@Param("username") String username);
  */
 int deleteMore(@Param("ids") String ids);
 ```
-```xml
+```
 <delete id="deleteMore">
 	delete from t_user where id in (${ids})
 </delete>
 ```
-```java
+```
 //测试类
 @Test
 public void deleteMore() {
@@ -616,7 +616,7 @@ public void deleteMore() {
 ```
 ## 动态设置表名
 - 只能使用${}，因为表名不能加单引号
-```java
+```
 /**
  * 查询指定表中的数据
  * @param tableName 
@@ -625,7 +625,7 @@ public void deleteMore() {
  */
 List<User> getUserByTable(@Param("tableName") String tableName);
 ```
-```xml
+```
 <!--List<User> getUserByTable(@Param("tableName") String tableName);-->
 <select id="getUserByTable" resultType="User">
 	select * from ${tableName}
@@ -641,7 +641,7 @@ List<User> getUserByTable(@Param("tableName") String tableName);
 - 在mapper.xml中设置两个属性
     - useGeneratedKeys：设置使用自增的主键
     * keyProperty：因为增删改有统一的返回值是受影响的行数，因此只能将获取的自增的主键放在传输的参数user对象的某个属性中
-```java
+```
 /**
  * 添加用户信息
  * @param user 
@@ -649,13 +649,13 @@ List<User> getUserByTable(@Param("tableName") String tableName);
  */
 void insertUser(User user);
 ```
-```xml
+```
 <!--void insertUser(User user);-->
 <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
 	insert into t_user values (null,#{username},#{password},#{age},#{sex},#{email})
 </insert>
 ```
-```java
+```
 //测试类
 @Test
 public void insertUser() {
@@ -680,7 +680,7 @@ public void insertUser() {
             - property：设置映射关系中实体类中的属性名
             - column：设置映射关系中表中的字段名
 - 若字段名和实体类中的属性名不一致，则可以通过resultMap设置自定义映射，即使字段名和属性名一致的属性也要映射，也就是全部属性都要列出来
-```xml
+```
 <resultMap id="empResultMap" type="Emp">
 	<id property="eid" column="eid"></id>
 	<result property="empName" column="emp_name"></result>
@@ -697,7 +697,7 @@ public void insertUser() {
 
     1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致
 
-       ```xml
+       ```
        <!--List<Emp> getAllEmp();-->
        <select id="getAllEmp" resultType="Emp">
            select eid,emp_name empName,age,sex,email from t_emp
@@ -706,7 +706,7 @@ public void insertUser() {
 
     2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
 
-       ```xml
+       ```
        <settings>
            <setting name="mapUnderscoreToCamelCase" value="true"/>
        </settings>
@@ -718,7 +718,7 @@ public void insertUser() {
 
 ## 多对一映射处理
 >查询员工信息以及员工所对应的部门信息
-```java
+```
 public class Emp {  
 	private Integer eid;  
 	private String empName;  
@@ -730,7 +730,7 @@ public class Emp {
 }
 ```
 ### 级联方式处理映射关系
-```xml
+```
 <resultMap id="empAndDeptResultMapOne" type="Emp">
 	<id property="eid" column="eid"></id>
 	<result property="empName" column="emp_name"></result>
@@ -749,7 +749,7 @@ public class Emp {
 - association：处理多对一的映射关系
 - property：需要处理多对的映射关系的属性名
 - javaType：该属性的类型
-```xml
+```
 <resultMap id="empAndDeptResultMapTwo" type="Emp">
 	<id property="eid" column="eid"></id>
 	<result property="empName" column="emp_name"></result>
@@ -773,7 +773,7 @@ public class Emp {
 #### 1. 查询员工信息
 - select：设置分布查询的sql的唯一标识（namespace.SQLId或mapper接口的全类名.方法名）
 - column：设置分步查询的条件
-```java
+```
 //EmpMapper里的方法
 /**
  * 通过分步查询，员工及所对应的部门信息
@@ -783,7 +783,7 @@ public class Emp {
  */
 Emp getEmpAndDeptByStepOne(@Param("eid") Integer eid);
 ```
-```xml
+```
 <resultMap id="empAndDeptByStepResultMap" type="Emp">
 	<id property="eid" column="eid"></id>
 	<result property="empName" column="emp_name"></result>
@@ -804,7 +804,7 @@ Emp getEmpAndDeptByStepOne(@Param("eid") Integer eid);
 </select>
 ```
 #### 2. 查询部门信息
-```java
+```
 //DeptMapper里的方法
 /**
  * 通过分步查询，员工及所对应的部门信息
@@ -814,7 +814,7 @@ Emp getEmpAndDeptByStepOne(@Param("eid") Integer eid);
  */
 Dept getEmpAndDeptByStepTwo(@Param("did") Integer did);
 ```
-```xml
+```
 <!--此处的resultMap仅是处理字段和属性的映射关系-->
 <resultMap id="EmpAndDeptByStepTwoResultMap" type="Dept">
 	<id property="did" column="did"></id>
@@ -829,7 +829,7 @@ Dept getEmpAndDeptByStepTwo(@Param("did") Integer did);
 
 ## 一对多映射处理
 
-```java
+```
 public class Dept {
     private Integer did;
     private String deptName;
@@ -840,7 +840,7 @@ public class Dept {
 ### 使用collection处理映射关系
 - collection：用来处理一对多的映射关系
 - ofType：表示该属性对饮的集合中存储的数据的类型
-```xml
+```
 <resultMap id="DeptAndEmpResultMap" type="Dept">
 	<id property="did" column="did"></id>
 	<result property="deptName" column="dept_name"></result>
@@ -859,7 +859,7 @@ public class Dept {
 ```
 ### 分步查询
 ####  1. 查询部门信息
-```java
+```
 /**
  * 通过分步查询，查询部门及对应的所有员工信息
  * 分步查询第一步：查询部门信息
@@ -869,7 +869,7 @@ public class Dept {
  */
 Dept getDeptAndEmpByStepOne(@Param("did") Integer did);
 ```
-```xml
+```
 <resultMap id="DeptAndEmpByStepOneResultMap" type="Dept">
 	<id property="did" column="did"></id>
 	<result property="deptName" column="dept_name"></result>
@@ -883,7 +883,7 @@ Dept getDeptAndEmpByStepOne(@Param("did") Integer did);
 </select>
 ```
 #### 2. 根据部门id查询部门中的所有员工
-```java
+```
 /**
  * 通过分步查询，查询部门及对应的所有员工信息
  * 分步查询第二步：根据部门id查询部门中的所有员工
@@ -893,7 +893,7 @@ Dept getDeptAndEmpByStepOne(@Param("did") Integer did);
  */
 List<Emp> getDeptAndEmpByStepTwo(@Param("did") Integer did);
 ```
-```xml
+```
 <!--List<Emp> getDeptAndEmpByStepTwo(@Param("did") Integer did);-->
 <select id="getDeptAndEmpByStepTwo" resultType="Emp">
 	select * from t_emp where did = #{did}
@@ -907,14 +907,14 @@ List<Emp> getDeptAndEmpByStepTwo(@Param("did") Integer did);
 - lazyLoadingEnabled：延迟加载的全局开关。当开启时，所有关联对象都会延迟加
 - aggressiveLazyLoading：当开启时，任何方法的调用都会加载该对象的所有属性。 否则，每个属性会按需加载
 - 此时就可以实现按需加载，获取的数据是什么，就只会执行相应的sql。此时可通过association和collection中的fetchType属性设置当前的分步查询是否使用延迟加载，fetchType="lazy(延迟加载)|eager(立即加载)"
-```xml
+```
 <settings>
 	<!--开启延迟加载-->
 	<setting name="lazyLoadingEnabled" value="true"/>
 </settings>
 ```
 
-```java
+```
 @Test
 public void getEmpAndDeptByStepOne() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -926,7 +926,7 @@ public void getEmpAndDeptByStepOne() {
 - 关闭延迟加载，两条SQL语句都运行了![](Resources/延迟加载测试1.png)
 - 开启延迟加载，只运行获取emp的SQL语句
   ![](Resources/延迟加载测试2.png)
-```java
+```
 @Test
 public void getEmpAndDeptByStepOne() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -940,7 +940,7 @@ public void getEmpAndDeptByStepOne() {
 - 开启后，需要用到查询dept的时候才会调用相应的SQL语句![](Resources/延迟加载测试3.png)
 - **fetchType**：当开启了全局的延迟加载之后，可以通过该属性手动控制延迟加载的效果，fetchType="lazy(延迟加载)|eager(立即加载)"
 
-```xml
+```
 <resultMap id="empAndDeptByStepResultMap" type="Emp">
 	<id property="eid" column="eid"></id>
 	<result property="empName" column="emp_name"></result>
@@ -965,7 +965,7 @@ public void getEmpAndDeptByStepOne() {
     - 这个`1=1`可以用来拼接`and`语句，例如：当empName为null时
         - 如果不加上恒成立条件，则SQL语句为`select * from t_emp where and age = ? and sex = ? and email = ?`，此时`where`会与`and`连用，SQL语句会报错
         - 如果加上一个恒成立条件，则SQL语句为`select * from t_emp where 1= 1 and age = ? and sex = ? and email = ?`，此时不报错
-```xml
+```
 <!--List<Emp> getEmpByCondition(Emp emp);-->
 <select id="getEmpByCondition" resultType="Emp">
 	select * from t_emp where 1=1
@@ -987,7 +987,7 @@ public void getEmpAndDeptByStepOne() {
 - where和if一般结合使用：
     - 若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字
     - 若where标签中的if条件满足，则where标签会自动添加where关键字，并将条件最前方多余的and/or去掉
-```xml
+```
 <!--List<Emp> getEmpByCondition(Emp emp);-->
 <select id="getEmpByCondition" resultType="Emp">
 	select * from t_emp
@@ -1009,7 +1009,7 @@ public void getEmpAndDeptByStepOne() {
 ```
 - 注意：where标签不能去掉条件后多余的and/or
 
-  ```xml
+  ```
   <!--这种用法是错误的，只能去掉条件前面的and/or，条件后面的不行-->
   <if test="empName != null and empName !=''">
   emp_name = #{empName} and
@@ -1026,7 +1026,7 @@ public void getEmpAndDeptByStepOne() {
     - prefixOverrides：在trim标签中的内容的前面去掉某些内容
     - suffixOverrides：在trim标签中的内容的后面去掉某些内容
 - 若trim中的标签都不满足条件，则trim标签没有任何效果，也就是只剩下`select * from t_emp`
-```xml
+```
 <!--List<Emp> getEmpByCondition(Emp emp);-->
 <select id="getEmpByCondition" resultType="Emp">
 	select * from t_emp
@@ -1046,7 +1046,7 @@ public void getEmpAndDeptByStepOne() {
 	</trim>
 </select>
 ```
-```java
+```
 //测试类
 @Test
 public void getEmpByCondition() {
@@ -1060,7 +1060,7 @@ public void getEmpByCondition() {
 ## choose、when、otherwise
 - `choose、when、otherwise`相当于`if...else if..else`
 - when至少要有一个，otherwise至多只有一个
-```xml
+```
 <select id="getEmpByChoose" resultType="Emp">
 	select * from t_emp
 	<where>
@@ -1084,7 +1084,7 @@ public void getEmpByCondition() {
 	</where>
 </select>
 ```
-```java
+```
 @Test
 public void getEmpByChoose() {
 	SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -1104,7 +1104,7 @@ public void getEmpByChoose() {
     - close：设置foreach标签中的内容的结束符
 - 批量删除
 
-  ```xml
+  ```
   <!--int deleteMoreByArray(Integer[] eids);-->
   <delete id="deleteMoreByArray">
       delete from t_emp where eid in
@@ -1113,7 +1113,7 @@ public void getEmpByChoose() {
       </foreach>
   </delete>
   ```
-  ```java
+  ```
   @Test
   public void deleteMoreByArray() {
       SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -1125,7 +1125,7 @@ public void getEmpByChoose() {
   ![](Resources/foreach测试结果1.png)
 - 批量添加
 
-  ```xml
+  ```
   <!--int insertMoreByList(@Param("emps") List<Emp> emps);-->
   <insert id="insertMoreByList">
       insert into t_emp values
@@ -1134,7 +1134,7 @@ public void getEmpByChoose() {
       </foreach>
   </insert>
   ```
-  ```java
+  ```
   @Test
   public void insertMoreByList() {
       SqlSession sqlSession = SqlSessionUtils.getSqlSession();
@@ -1151,11 +1151,11 @@ public void getEmpByChoose() {
 ## SQL片段
 - sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
 - 声明sql片段：`<sql>`标签
-```xml
+```
 <sql id="empColumns">eid,emp_name,age,sex,email</sql>
 ```
 - 引用sql片段：`<include>`标签
-```xml
+```
 <!--List<Emp> getEmpByCondition(Emp emp);-->
 <select id="getEmpByCondition" resultType="Emp">
 	select <include refid="empColumns"></include> from t_emp
@@ -1201,7 +1201,7 @@ public void getEmpByChoose() {
 - SqlSession关闭之后，一级缓存中的数据会写入二级缓存
 ## 整合第三方缓存EHCache（了解）
 ### 添加依赖
-```xml
+```
 <!-- Mybatis EHCache整合包 -->
 <dependency>
 	<groupId>org.mybatis.caches</groupId>
@@ -1225,7 +1225,7 @@ public void getEmpByChoose() {
 
 ### 创建EHCache的配置文件ehcache.xml
 - 名字必须叫`ehcache.xml`
-```xml
+```
 <?xml version="1.0" encoding="utf-8" ?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
@@ -1245,12 +1245,12 @@ public void getEmpByChoose() {
 ```
 ### 设置二级缓存的类型
 - 在xxxMapper.xml文件中设置二级缓存类型
-```xml
+```
 <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 ```
 ### 加入logback日志
 - 存在SLF4J时，作为简易日志的log4j将失效，此时我们需要借助SLF4J的具体实现logback来打印日志。创建logback的配置文件`logback.xml`，名字固定，不可改变
-```xml
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
     <!-- 指定日志输出的位置 -->
@@ -1293,7 +1293,7 @@ public void getEmpByChoose() {
     - Mapper映射文件
 ## 创建逆向工程的步骤
 ### 添加依赖和插件
-```xml
+```
 <dependencies>
 	<!-- MyBatis核心依赖包 -->
 	<dependency>
@@ -1356,7 +1356,7 @@ public void getEmpByChoose() {
 </build>
 ```
 ### 创建MyBatis的核心配置文件
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -1384,7 +1384,7 @@ public void getEmpByChoose() {
 ```
 ### 创建逆向工程的配置文件
 - 文件名必须是：`generatorConfig.xml`
-```xml
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
@@ -1438,7 +1438,7 @@ public void getEmpByChoose() {
 - `example.createCriteria().xxx`：创建条件对象，通过andXXX方法为SQL添加查询添加，每个条件之间是and关系
 - `example.or().xxx`：将之前添加的条件通过or拼接其他条件
   ![](Resources/example的方法.png)
-```java
+```
 @Test public void testMBG() throws IOException {
 	InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
 	SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
@@ -1465,7 +1465,7 @@ public void getEmpByChoose() {
 # 分页插件
 ## 分页插件使用步骤
 ### 添加依赖
-```xml
+```
 <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
 <dependency>
 	<groupId>com.github.pagehelper</groupId>
@@ -1476,7 +1476,7 @@ public void getEmpByChoose() {
 ### 配置分页插件
 - 在MyBatis的核心配置文件（mybatis-config.xml）中配置插件
 - ![](Resources/配置分页插件.png)
-```xml
+```
 <plugins>
 	<!--设置分页插件-->
 	<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
@@ -1487,7 +1487,7 @@ public void getEmpByChoose() {
 - 在查询功能之前使用`PageHelper.startPage(int pageNum, int pageSize)`开启分页功能
     - pageNum：当前页的页码
     - pageSize：每页显示的条数
-```java
+```
 @Test
 public void testPageHelper() throws IOException {
 	InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
@@ -1505,7 +1505,7 @@ public void testPageHelper() throws IOException {
 ![](Resources/分页测试结果.png)
 ### 分页相关数据
 #### 方法一：直接输出
-```java
+```
 @Test
 public void testPageHelper() throws IOException {
 	InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
@@ -1529,7 +1529,7 @@ public void testPageHelper() throws IOException {
 - 在查询获取list集合之后，使用`PageInfo<T> pageInfo = new PageInfo<>(List<T> list, intnavigatePages)`获取分页相关数据
     - list：分页之后的数据
     - navigatePages：导航分页的页码数
-```java
+```
 @Test
 public void testPageHelper() throws IOException {
 	InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
