@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8abedd86-4b08-4fdc-bd4a-eee51769f5e2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Mybatis.md" beforeDir="false" afterPath="$PROJECT_DIR$/Mybatis.md" afterDir="false" />
-    </list>
+    <list default="true" id="8abedd86-4b08-4fdc-bd4a-eee51769f5e2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1656407398616</updated>
       <workItem from="1656407401758" duration="640000" />
-      <workItem from="1656408189892" duration="3065000" />
+      <workItem from="1656408189892" duration="3361000" />
     </task>
     <servers />
   </component>
