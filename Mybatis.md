@@ -308,7 +308,7 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
    ```
 4. 查询一个实体类对象
    ```xml
-   <!--User getUserById();-->  
+  <!--User getUserById();-->  
    <select id="getUserById" resultType="com.atguigu.mybatis.bean.User">  
        select * from t_user where id = 2  
    </select>
@@ -333,7 +333,8 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 
 - ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类型的字段进行赋值时，需要手动加单引号；但是#{}使用占位符赋值的方式拼接sql，此时为字符串类型或日期类型的字段进行赋值时，可以自动添加单引号
 
-- ${}一般使用在我们能够确定值的地方，也就是程***序员自己赋值***的地方 
+- ${}一般使用在我们能够确定值的地方，也就是程***序员自己赋值***的地方
+
 - #{}一般用在***用户输入值***的地方
 
   ```java
@@ -1423,7 +1424,6 @@ public void getEmpByChoose() {
     </context>
 </generatorConfiguration>
 ```
-
 ### 执行MBG插件的generate目标
 - ![](Resources/执行MBG插件的generate目标.png)
 - 如果出现报错：`Exception getting JDBC Driver`，可能是pom.xml中，数据库驱动配置错误
@@ -1528,7 +1528,7 @@ public void testPageHelper() throws IOException {
 - 在查询获取list集合之后，使用`PageInfo<T> pageInfo = new PageInfo<>(List<T> list, intnavigatePages)`获取分页相关数据
     - list：分页之后的数据
     - navigatePages：导航分页的页码数
-```
+```java
 @Test
 public void testPageHelper() throws IOException {
 	InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
