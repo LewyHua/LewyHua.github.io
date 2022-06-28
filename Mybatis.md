@@ -308,7 +308,7 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
    ```
 4. 查询一个实体类对象
    ```xml
-  <!--User getUserById();-->  
+   <!--User getUserById();-->  
    <select id="getUserById" resultType="com.atguigu.mybatis.bean.User">  
        select * from t_user where id = 2  
    </select>
